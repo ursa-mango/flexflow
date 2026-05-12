@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FlexFlow - Gestão Jurídica Inteligente</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <!-- ==================== SIDEBAR ==================== -->
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <div class="logo">
+                <i class="fas fa-shield-alt"></i>
+                <span>FlexFlow</span>
+            </div>
+        </div>
+
+        <nav class="sidebar-nav">
+            <div class="nav-section">Principal</div>
+            <a class="nav-item active" data-tab="dashboard">
+                <i class="fas fa-th-large"></i> Dashboard
+            </a>
+            <a class="nav-item" data-tab="processos">
+                <i class="fas fa-gavel"></i> Processos
+                <span class="nav-badge pulse" id="alertCount">3</span>
+            </a>
+
+            <div class="nav-section">Compliance</div>
+            <a class="nav-item" data-tab="lgpd">
+                <i class="fas fa-shield-virus"></i> LGPD
+                <span class="nav-badge" id="lgpdBadge">65%</span>
+            </a>
+            <a class="nav-item" data-tab="documentos">
+                <i class="fas fa-file-contract"></i> Documentos
+            </a>
+
+            <div class="nav-section">Administração</div>
+            <a class="nav-item" data-tab="automacoes">
+                <i class="fas fa-robot"></i> Automações
+            </a>
+            <a class="nav-item" data-tab="relatorios">
+                <i class="fas fa-chart-bar"></i> Relatórios
+                <span class="nav-badge badge-new">Novo</span>
+            </a>
+            <a class="nav-item" data-tab="produtividade">
+                <i class="fas fa-tachometer-alt"></i> Produtividade
+            </a>
+        </nav>
+
+        <div class="sidebar-footer">
+            <i class="fas fa-circle online-dot"></i> Sistema online • v1.2.0
+        </div>
+    </aside>
+
+    <!-- Botão Mobile -->
+    <button class="menu-toggle" id="menuToggle">
+        <i class="fas fa-bars"></i>
+    </button>
+
+    <!-- ==================== MAIN CONTENT ==================== -->
+    <main class="main-content">
+
+        <!-- ========== DASHBOARD ========== -->
+        <div class="tab-content active" id="tab-dashboard">
+            <div class="topbar">
+                <h1>📊 Dashboard</h1>
+                <div class="topbar-actions">
+                    <div class="search-box">
+                        <i class="fas fa-search"></i>
+                        <input type="text" placeholder="Buscar processos...">
+                    </div>
+                    <div class="user-avatar" id="userAvatar">AD</div>
+                </div>
+            </div>
+
+            <!-- Cards de Indicadores -->
+            <div class="cards-row">
+                <div class="stat-card">
+                    <div class="stat-icon blue"><i class="fas fa-folder-open"></i></div>
+                    <div class="stat-info">
+                        <h3>Processos Ativos</h3>
+                        <div class="number">127</div>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon orange"><i class="fas fa-exclamation-triangle"></i></div>
+                    <div class="stat-info">
+                        <h3>Prazos Urgentes</h3>
+                        <div class="number text-danger">8</div>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon green"><i class="fas fa-check-circle"></i></div>
+                    <div class="stat-info">
+                        <h3>Concluídos (Mês)</h3>
+                        <div class="number">43</div>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon purple"><i class="fas fa-shield-alt"></i></div>
+                    <div class="stat-info">
+                        <h3>Conformidade LGPD</h3>
+                        <div class="number">65%</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Gráficos e Alertas -->
+            <div class="dashboard-grid">
+                <div class="card">
+                    <div class="card-header">
+                        <h3>📈 Processos por Status</h3>
+                        <span class="badge badge-info">Últimos 30 dias</span>
+                    </div>
+                    <div class="card-body">
+                        <div class="chart-bar">
+                            <div class="bar-item">
+                                <span class="bar-value">45</span>
+                                <div class="bar bar-blue" style="height:150px;"></div>
+                                <span class="bar-label">Em Andamento</span>
+                            </div>
+                            <div class="bar-item">
+                                <span class="bar-value">32</span>
+                                <div class="bar bar-orange" style="height:110px;"></div>
+                                <span class="bar-label">Aguardando</span>
+                            </div>
+                            <div class="bar-item">
+                                <span class="bar-value">43</span>
+                                <div class="bar bar-green" style="height:140px;"></div>
+                                <span class="bar-label">Concluídos</span>
+                            </div>
+                            <div class="bar-item">
+                                <span class="bar-value">7</span>
+                                <div class="bar bar-red" style="height:30px;"></div>
+                                <span class="bar-label">Urgentes</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <h3>🔔 Alertas Prioritários</h3>
+                        <span class="badge badge-danger pulse">8 urgentes</span>
+                    </div>
+                    <div class="card-body">
+                        <div class="alert-list" id="alertList">
+                            <div class="alert-item alert-urgent">
+                                <strong>⚠️ Processo 001234</strong><br>
+                                <small>Cliente: Silva & Associados</small><br>
+                                <small class="text-danger">Vence em 2 dias!</small>
+                            </div>
+                            <div class="alert-item alert-moderate">
+                                <strong>⚡ Processo 005678</strong><br>
+                                <small>Cliente: Construtora Beta</small><br>
+                                <small class="text-warning">Vence em 4 dias</small>
+                            </div>
+                            <div class="alert-item alert-urgent">
+                                <strong>⚠️ Processo 009012</strong><br>
+                                <small>Cliente: Martins Advogados</small><br>
+                                <small class="text-danger">Vence amanhã!</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Timeline -->
+            <div class="card">
+                <div class="card-header">
+                    <h3>🕐 Movimentações Recentes</h3>
+                </div>
+                <div class="card-body">
+                    <div class="timeline" id="timeline">
+                        <div class="timeline-item">
+                            <strong>Petição protocolada</strong> - Processo 001234
+                            <br><small>Há 2 horas</small>
+                        </div>
+                        <div class="timeline-item">
+                            <strong>Documento LGPD atualizado</strong> - Política de Privacidade
+                            <br><small>Há 5 horas</small>
+                        </div>
+                        <div class="timeline-item">
+                            <strong>Novo processo cadastrado</strong> - Cliente XYZ Corp
+                            <br><small>Há 1 dia</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========== PROCESSOS ========== -->
+        <div class="tab-content" id="tab-processos">
+            <div class="topbar">
+                <h1>⚖️ Gestão de Processos</h1>
+                <button class="btn btn-primary" id="btnNovoProcesso">
+                    <i class="fas fa-plus"></i> Novo Processo
+                </button>
+            </div>
+
+            <!-- Filtros -->
+            <div class="card filter-card">
+                <div class="card-body">
+                    <div class="filter-row">
+                        <select id="filterStatus">
+                            <option value="">Todos os Status</option>
+                            <option value="em_andamento">Em Andamento</option>
+                            <option value="concluido">Concluído</option>
+                            <option value="urgente">Urgente</option>
+                        </select>
+                        <select id="filterPriority">
+                            <option value="">Todas as Prioridades</option>
+                            <option value="alta">Alta</option>
+                            <option value="media">Média</option>
+                            <option value="baixa">Baixa</option>
+                        </select>
+                        <input type="text" id="searchProcess" placeholder="Buscar por número ou cliente...">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tabela de Processos -->
+            <div class="card">
+                <div class="card-body table-responsive">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Nº Processo</th>
+                                <th>Cliente</th>
+                                <th>Tipo</th>
+                                <th>Status</th>
+                                <th>Prioridade</th>
+                                <th>Prazo</th>
+                                <th>Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody id="processTableBody">
+                            <!-- Preenchido via JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Modal de Cadastro -->
+            <div class="modal" id="modalProcesso">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3>📋 Cadastrar Processo</h3>
+                        <button class="modal-close" id="closeModal">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="processForm">
+                            <div class="form-grid">
+                                <div class="form-group">
+                                    <label for="numProcesso">Número do Processo *</label>
+                                    <input type="text" id="numProcesso" required placeholder="0000000-00.0000.0.00.0000">
+                                </div>
+                                <div class="form-group">
+                                    <label for="cliente">Cliente *</label>
+                                    <input type="text" id="cliente" required placeholder="Nome do cliente">
+                                </div>
+                                <div class="form-group">
+                                    <label for="tipoAcao">Tipo de Ação</label>
+                                    <select id="tipoAcao">
+                                        <option value="civil">Civil</option>
+                                        <option value="criminal">Criminal</option>
+                                        <option value="trabalhista">Trabalhista</option>
+                                        <option value="tributario">Tributário</option>
+                                        <option value="empresarial">Empresarial</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="status">Status</label>
+                                    <select id="statusProcesso">
+                                        <option value="em_andamento">Em Andamento</option>
+                                        <option value="aguardando">Aguardando</option>
+                                        <option value="concluido">Concluído</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="prioridade">Prioridade</label>
+                                    <select id="prioridade">
+                                        <option value="alta">Alta</option>
+                                        <option value="media">Média</option>
+                                        <option value="baixa">Baixa</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="prazo">Prazo Final *</label>
+                                    <input type="date" id="prazo" required>
+                                </div>
+                                <div class="form-group full">
+                                    <label for="descricao">Descrição</label>
+                                    <textarea id="descricao" rows="3" placeholder="Detalhes do processo..."></textarea>
+                                </div>
+                            </div>
+                            <div class="form-actions">
+                                <button type="button" class="btn btn-outline" id="cancelModal">Cancelar</button>
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="fas fa-save"></i> Salvar Processo
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========== LGPD ========== -->
+        <div class="tab-content" id="tab-lgpd">
+            <div class="topbar">
+                <h1>🛡️ Compliance LGPD</h1>
+                <span class="badge badge-info">Lei 13.709/2018</span>
+            </div>
+
+            <div class="dashboard-grid">
+                <div class="card">
+                    <div class="card-header">
+                        <h3>✅ Checklist de Conformidade</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="progress-circle">
+                            <div class="progress-inner">65%</div>
+                        </div>
+                        <p class="text-center text-muted">13 de 20 itens concluídos</p>
+
+                        <div id="lgpdChecklist">
+                            <div class="checklist-item completed">
+                                <input type="checkbox" checked>
+                                <span class="checklist-text">Nomear Encarregado de Dados (DPO)</span>
+                            </div>
+                            <div class="checklist-item completed">
+                                <input type="checkbox" checked>
+                                <span class="checklist-text">Mapear fluxo de dados pessoais</span>
+                            </div>
+                            <div class="checklist-item completed">
+                                <input type="checkbox" checked>
+                                <span class="checklist-text">Política de Privacidade atualizada</span>
+                            </div>
+                            <div class="checklist-item">
+                                <input type="checkbox">
+                                <span class="checklist-text">Termo de Consentimento revisado</span>
+                            </div>
+                            <div class="checklist-item">
+                                <input type="checkbox">
+                                <span class="checklist-text">Relatório de Impacto (RIPD) pendente</span>
+                            </div>
+                            <div class="checklist-item">
+                                <input type="checkbox">
+                                <span class="checklist-text">Treinamento LGPD da equipe</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <h3>⚠️ Matriz de Riscos</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="risk-list">
+                            <div class="risk-item risk-high">
+                                <strong>🔴 Risco Alto:</strong> Dados sensíveis sem criptografia
+                                <br><small>Impacto: Multa de até 2% do faturamento</small>
+                            </div>
+                            <div class="risk-item risk-medium">
+                                <strong>🟠 Risco Médio:</strong> Consentimentos desatualizados
+                                <br><small>Impacto: Processos administrativos</small>
+                            </div>
+                            <div class="risk-item risk-low">
+                                <strong>🟢 Risco Baixo:</strong> Documentação incompleta
+                                <br><small>Impacto: Auditoria interna</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <h3>📄 Documentos de Conformidade</h3>
+                </div>
+                <div class="card-body table-responsive">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Documento</th>
+                                <th>Status</th>
+                                <th>Última Revisão</th>
+                                <th>Ação</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Política de Privacidade</td>
+                                <td><span class="badge badge-success">Atualizado</span></td>
+                                <td>10/05/2026</td>
+                                <td><button class="btn btn-sm btn-outline">📥 Download</button></td>
+                            </tr>
+                            <tr>
+                                <td>Termo de Consentimento</td>
+                                <td><span class="badge badge-warning">Revisar</span></td>
+                                <td>01/03/2026</td>
+                                <td><button class="btn btn-sm btn-outline">📥 Download</button></td>
+                            </tr>
+                            <tr>
+                                <td>Relatório de Impacto (RIPD)</td>
+                                <td><span class="badge badge-danger">Pendente</span></td>
+                                <td>-</td>
+                                <td><button class="btn btn-sm btn-primary">➕ Criar</button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========== AUTOMAÇÕES ========== -->
+        <div class="tab-content" id="tab-automacoes">
+            <div class="topbar">
+                <h1>🤖 Automações</h1>
+                <button class="btn btn-primary"><i class="fas fa-plus"></i> Nova Automação</button>
+            </div>
+
+            <div class="cards-row">
+                <div class="card">
+                    <div class="card-header">
+                        <h3>⚡ Automações Ativas</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="automation-list">
+                            <div class="automation-item">
+                                <div class="automation-info">
+                                    <h4>📧 Alerta de Prazo</h4>
+                                    <p>Enviar e-mail quando prazo estiver a 3 dias do vencimento</p>
+                                </div>
+                                <span class="badge badge-success toggle-badge">Ativo</span>
+                            </div>
+                            <div class="automation-item">
+                                <div class="automation-info">
+                                    <h4>📋 Geração de Relatório</h4>
+                                    <p>Gerar relatório semanal de processos ativos toda segunda-feira</p>
+                                </div>
+                                <span class="badge badge-success toggle-badge">Ativo</span>
+                            </div>
+                            <div class="automation-item">
+                                <div class="automation-info">
+                                    <h4>🔔 Notificação LGPD</h4>
+                                    <p>Notificar DPO sobre documentos com revisão pendente</p>
+                                </div>
+                                <span class="badge badge-secondary toggle-badge">Pausado</span>
+                            </div>
+                            <div class="automation-item">
+                                <div class="automation-info">
+                                    <h4>📊 Backup Automático</h4>
+                                    <p>Realizar backup dos dados diariamente às 23h</p>
+                                </div>
+                                <span class="badge badge-success toggle-badge">Ativo</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========== RELATÓRIOS ========== -->
+        <div class="tab-content" id="tab-relatorios">
+            <div class="topbar">
+                <h1>📊 Relatórios</h1>
+                <button class="btn btn-primary"><i class="fas fa-download"></i> Exportar</button>
+            </div>
+
+            <div class="cards-row">
+                <div class="card report-card">
+                    <div class="card-body text-center">
+                        <i class="fas fa-file-pdf report-icon"></i>
+                        <h3>Relatório de Produtividade</h3>
+                        <p>Processos concluídos, prazos cumpridos e indicadores da equipe</p>
+                        <button class="btn btn-outline">Gerar Relatório</button>
+                    </div>
+                </div>
+                <div class="card report-card">
+                    <div class="card-body text-center">
+                        <i class="fas fa-file-excel report-icon"></i>
+                        <h3>Relatório de Prazos</h3>
+                        <p>Visão geral de prazos ativos, vencidos e próximos ao vencimento</p>
+                        <button class="btn btn-outline">Gerar Relatório</button>
+                    </div>
+                </div>
+                <div class="card report-card">
+                    <div class="card-body text-center">
+                        <i class="fas fa-shield-alt report-icon"></i>
+                        <h3>Relatório LGPD</h3>
+                        <p>Status de conformidade, riscos identificados e plano de ação</p>
+                        <button class="btn btn-outline">Gerar Relatório</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========== PRODUTIVIDADE ========== -->
+        <div class="tab-content" id="tab-produtividade">
+            <div class="topbar">
+                <h1>📈 Produtividade</h1>
+            </div>
+
+            <div class="dashboard-grid">
+                <div class="card">
+                    <div class="card-header">
+                        <h3>🏆 Indicadores da Equipe</h3>
+                    </div>
+                    <div class="card-body">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Colaborador</th>
+                                    <th>Processos</th>
+                                    <th>Concluídos</th>
+                                    <th>Taxa de Sucesso</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Ana Silva</td>
+                                    <td>45</td>
+                                    <td>38</td>
+                                    <td><span class="badge badge-success">84%</span></td>
+                                </tr>
+                                <tr>
+                                    <td>Carlos Oliveira</td>
+                                    <td>38</td>
+                                    <td>30</td>
+                                    <td><span class="badge badge-success">79%</span></td>
+                                </tr>
+                                <tr>
+                                    <td>Mariana Costa</td>
+                                    <td>52</td>
+                                    <td>47</td>
+                                    <td><span class="badge badge-success">90%</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <h3>⏱️ Tempo Médio por Processo</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="metric-big">
+                            <span class="metric-number">4.5</span>
+                            <span class="metric-unit">dias</span>
+                        </div>
+                        <p class="text-muted">Tempo médio de conclusão nos últimos 30 dias</p>
+                        <div class="metric-detail">
+                            <span>Meta: 5 dias</span>
+                            <span class="badge badge-success">✓ Abaixo da meta</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>
